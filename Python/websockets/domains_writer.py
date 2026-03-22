@@ -2,6 +2,8 @@
 
 import asyncio
 import os
+import ssl
+import certifi
 from websockets.asyncio.client import connect
 from websockets.exceptions import ConnectionClosedError
 
@@ -15,7 +17,8 @@ async def main():
         await asyncio.sleep(5)
 
 async def run_stream(username, password):
-    async with connect(f"wss://{username}:{password}@api.domainsproject.org/ws/domain_stream") as websocket:
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+    async with connect(f"wss://{username}:{password}@api.domainsproject.org/ws/domain_stream", ssl=ssl_context) as websocket:
         while True:
             try:
                 message = await websocket.recv()

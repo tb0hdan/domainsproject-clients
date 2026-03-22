@@ -1,7 +1,7 @@
 # Installation
 
 ```bash
-pip install websockets
+pip install certifi websockets
 ```
 
 
